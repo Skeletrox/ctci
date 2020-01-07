@@ -60,6 +60,25 @@ func helper(oneHead, twoHead *Node) *Node {
 	return returnableVanguard.Next
 }
 
+func helperFollowUp(oneHead, twoHead *Node) (*Node, int) {
+	/*
+		Haven't really done any preprocessing for different number digits in this case.
+		Either pad with zeros at the start or just count number of digits and
+		start from the middle of the larger number
+
+	*/
+	if oneHead == nil {
+		// if oneHead is nil, twoHead is also nil
+		return nil, 0
+	}
+	childNode, carry := helperFollowUp(oneHead.Next, twoHead.Next)
+	val := oneHead.Value + twoHead.Value + carry
+	carry = val / 10
+	val %= 10
+	node := &Node{childNode, val}
+	return node, carry
+}
+
 func main() {
 
 	num1 := [3]int{9, 6, 3}
